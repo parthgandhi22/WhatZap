@@ -36,9 +36,10 @@ router.post("/signup",async (req,res)=>{
             
             res.status(201).json({
                 _id:NewUser._id,
-                fullName:NewUser.fullname,
-                Email:NewUser.email,
-                profilePic:NewUser.profilepic
+                fullname:NewUser.fullname,
+                email:NewUser.email,
+                profilepic:NewUser.profilepic,
+                createdAt:NewUser.createdAt
             });
 
         }else{
@@ -67,9 +68,10 @@ router.post("/login",async (req,res)=>{
         generateToken(user._id,res);   //generating token
         res.status(200).json({
             _id:user._id,
-            fullName:user.fullname,
-            Email:user.email,
-            profilePic:user.profilepic
+            fullname:user.fullname,
+            email:user.email,
+            profilepic:user.profilepic,
+            createdAt:user.createdAt
         });
     }
     catch(error){

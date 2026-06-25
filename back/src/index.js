@@ -18,7 +18,7 @@ connectdb().then(() => {
     app.use(cookieParser()); // Used for handling cookies
 
     app.use(cors({
-        origin: "http://localhost:5174",
+        origin: ["http://localhost:5173", "http://localhost:5174"],
         credentials: true
     }));
 

@@ -11,14 +11,19 @@ const ChatContainer = () => {
   const messagesEndRef=useRef(null);
   
   const scrollToBottom = () => {
-    if (messagesEndRef.current && messages) {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });}
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
+
   useEffect(() => {
-      getMessages(selectedUser._id);
-      newmsg()
-      scrollToBottom();
-      return()=>delnewmsg();
+    getMessages(selectedUser._id);
+    newmsg();
+    return () => delnewmsg();
+  }, [selectedUser._id, getMessages, newmsg, delnewmsg]);
+
+  useEffect(() => {
+    scrollToBottom();
   }, [messages]);
 
   return (
@@ -27,14 +32,14 @@ const ChatContainer = () => {
 
       <div className='flex-1 overflow-y-auto p-4 space-y-4'>
         {messages.map((msg)=>(
-          <div key={msg._id} className={`chat ${msg.senderId===authUser._id ?"chat-end" : "chat-start"}`} ref={messagesEndRef}>
+          <div key={msg._id} className={`chat ${msg.senderId===authUser._id ?"chat-end" : "chat-start"}`}>
             <div className='chat-image avatar'>
             <div className="size-10 rounded-full border">
                 <img
                   src={
                     msg.senderId === authUser._id
-                      ? authUser.profilepic || "/avatar.png"
-                      : selectedUser.profilepic || "/avatar.png"
+                      ? authUser.profilepic || "/avatar.svg"
+                      : selectedUser.profilepic || "/avatar.svg"
                   }
                   alt="profile pic"
                 />
@@ -57,6 +62,7 @@ const ChatContainer = () => {
               </div>
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
       <MessageInput/>
     </div>
