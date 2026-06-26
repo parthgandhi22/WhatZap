@@ -2,7 +2,6 @@ import express from "express"
 import jwt from "jsonwebtoken"
 import User from "../models/user.js" 
 
-//sauthi hard hamda sudhi nu
 //This code protects routes by verifying the JWT token stored in cookies. It ensures that only authenticated users can access certain routes.
 export const protectRoute=async (req,res,next)=>{
     try{
@@ -16,11 +15,10 @@ export const protectRoute=async (req,res,next)=>{
             return res.status(401).json({message:"Unauthorized access-Invalid token"})
 
          const user=await User.findById(decoded.userId).select("-password")   //finding the user from the token through userid
-         //select -password means not sending pwd to next middleware
          if (!user)
             return res.status(401).json({message:"User not found"})
 
-         req.user=user;      //next ma je req che te aa user no che
+         req.user=user;     
          next();
 
     }
