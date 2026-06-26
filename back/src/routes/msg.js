@@ -22,7 +22,7 @@ router.get("/users",protectRoute,async(req,res)=>{
 
 router.get("/:id",protectRoute,async (req,res)=>{
     try{
-        const {id:usertochatid}=req.params; //jeni sathe vat kare
+        const {id:usertochatid}=req.params; 
         const myid=req.user._id;    //me
         const messages=await Message.find({        //finding all the messages between me and jeni sathe vat karu
             $or:[
